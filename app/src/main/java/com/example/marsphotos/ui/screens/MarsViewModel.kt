@@ -32,7 +32,7 @@ import java.io.IOException
 
 sealed interface MarsUiState
 {
-    data class Success(val photos: MarsPhoto): MarsUiState
+    data class Success(val photos: List<MarsPhoto>): MarsUiState
     object Error: MarsUiState
     object Loading: MarsUiState
 }
@@ -62,7 +62,7 @@ class MarsViewModel(
             marsUiState = MarsUiState.Loading
             marsUiState = try
             {
-                val result = marsPhotosRepository.getMarsPhotos()[0]
+                val result = marsPhotosRepository.getMarsPhotos()
                 MarsUiState.Success(result)
             }
             catch (e: IOException)
